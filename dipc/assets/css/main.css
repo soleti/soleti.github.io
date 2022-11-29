@@ -20,7 +20,7 @@
 	font-family: 'Space Grotesk', sans-serif;
 	display: table;
 	font-weight: bolder;
-	font-size: 72px;
+	font-size: 4em;
 	/* width:100%; */
 }
 
@@ -4048,7 +4048,7 @@ body.is-preload #sidebar nav ul li {
 	background-attachment: fixed;
 	background-image: url("images/background.png");
 	background-position: top right;
-	background-size: 80%;
+	background-size: cover;
 }
 
 #intro p {
