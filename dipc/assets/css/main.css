@@ -3161,6 +3161,11 @@ header h6+p {
 		padding: 3em 0 0 0;
 	}
 
+	#header #title {
+		font-size: x-large;
+		padding-top: 0.2em;
+	}
+
 }
 
 /* Spotlights */
