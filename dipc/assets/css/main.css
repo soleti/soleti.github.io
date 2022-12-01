@@ -58,7 +58,6 @@ h1.major {
 	border: 1px solid rgba(255, 255, 255, 0.15)
 }
 
-
 h2.major {
 	margin-top: 2em !important;
 }
@@ -2183,8 +2182,27 @@ button:hover:active:after,
 	margin: 0 0 2em 0;
 }
 
-.features section div {
-	min-height: 160px
+.features > section {
+	display: flex;
+  }
+
+.features > section > div {
+	flex: 70%;
+	margin-bottom: 1em;
+  }
+
+.features > section > .portrait {
+flex: 30%;
+margin-bottom: 1em;
+}
+
+/* .features .portrait {
+	float: left;
+	min-height: 160px;
+} */
+
+.portrait img {
+	height: 140px; width: 140px; float: left; margin-right: 1em
 }
 
 .features section {
@@ -2221,7 +2239,7 @@ button:hover:active:after,
 				opacity: 1;
 			} */
 
-.features section:nth-child(1) .icon {
+/* .features section:nth-child(1) .icon {
 	-moz-transition-delay: 0.15s;
 	-webkit-transition-delay: 0.15s;
 	-ms-transition-delay: 0.15s;
@@ -2359,7 +2377,7 @@ button:hover:active:after,
 	-webkit-transition-delay: 3s;
 	-ms-transition-delay: 3s;
 	transition-delay: 3s;
-}
+} */
 
 .features.inactive section .icon {
 	-moz-transform: scale(0.5);
