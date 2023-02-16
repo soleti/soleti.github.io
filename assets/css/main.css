@@ -1257,6 +1257,10 @@ input, select, textarea {
 				padding: 1rem;
 			}
 
+			#bg:before {
+				background-image: linear-gradient(to top, rgba(19, 21, 25, 0.65), rgba(19, 21, 25, 0.65)), url("../../images/overlay.png");
+			}
+
 		}
 
 /* Header */
