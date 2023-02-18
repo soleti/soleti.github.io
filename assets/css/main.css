@@ -1163,7 +1163,7 @@ input, select, textarea {
 			-webkit-transition-delay: 0.75s;
 			-ms-transition-delay: 0.75s;
 			transition-delay: 0.75s;
-			background-image: linear-gradient(to top, rgba(19, 21, 25, 0.55), rgba(19, 21, 25, 0.55)), url("../../images/overlay.png");
+			background-image: linear-gradient(to top, rgba(19, 21, 25, 0.40), rgba(19, 21, 25, 0.40)), url("../../images/overlay.png");
 			background-size: auto,
  256px 256px;
 			background-position: center,
@@ -1182,7 +1182,7 @@ input, select, textarea {
 			-webkit-transition: -webkit-transform 0.325s ease-in-out, -webkit-filter 0.325s ease-in-out;
 			-ms-transition: -ms-transform 0.325s ease-in-out, -ms-filter 0.325s ease-in-out;
 			transition: transform 0.325s ease-in-out, filter 0.325s ease-in-out;
-			background-image: url("../../images/next_bkg.png");
+			background-image: url("../../images/bg.jpg");
 			background-position: left;
 			background-size: cover;
 			background-repeat: no-repeat;
@@ -1258,7 +1258,7 @@ input, select, textarea {
 			}
 
 			#bg:before {
-				background-image: linear-gradient(to top, rgba(19, 21, 25, 0.65), rgba(19, 21, 25, 0.65)), url("../../images/overlay.png");
+				background-image: linear-gradient(to top, rgba(19, 21, 25, 0.50), rgba(19, 21, 25, 0.50)), url("../../images/overlay.png");
 			}
 
 		}
