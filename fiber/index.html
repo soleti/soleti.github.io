@@ -16,7 +16,7 @@
     const ctx = canvas.getContext('2d');
     const circleCenter = { x: 300, y: 300 };
     const circleRadius = 200;
-    const refractiveIndexInside = 1.5;
+    const refractiveIndexInside = 1.6;
     const refractiveIndexOutside = 1.0;
     const criticalAngle = Math.asin(refractiveIndexOutside / refractiveIndexInside);
 
@@ -43,20 +43,25 @@
 
       if (intersect) {
         const { x: ix, y: iy, normalAngle } = intersect;
+        const distanceFromCenter = Math.hypot(sourcePoint.x - circleCenter.x, sourcePoint.y - circleCenter.y);
+
+        if (distanceFromCenter <= circleRadius) {
         drawLine(sourcePoint.x, sourcePoint.y, ix, iy, 'blue');
 
         // Calculate incidence angle as absolute difference between normal and incoming ray angle
         const incidenceAngle = Math.abs(normalizeAngle(angle - normalAngle));
 
+        // Check if the source point is inside the circle
+
         if (incidenceAngle >= criticalAngle) {
-          // Reflect the ray if the angle of incidence is greater than or equal to the critical angle
+          // Reflect the ray if inside the circle and incidence angle is above critical angle
           const reflectAngle = 2 * normalAngle - angle;
           drawReflectedRay(ix, iy, reflectAngle);
         } else {
-          // Refract the ray based on Snell's law if angle is less than critical angle
+          // Refract the ray based on Snell's law if outside the circle or angle is below critical angle
           const refractAngle = normalAngle + Math.asin((refractiveIndexInside / refractiveIndexOutside) * Math.sin(incidenceAngle));
           drawRefractedRay(ix, iy, refractAngle);
-        }
+        }}
       }
     }
 
