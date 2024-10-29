@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Optical Fiber Simulation</title>
+  <style>
+    body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+    canvas { border: 1px solid #000; background-color: #f9f9f9; }
+  </style>
+</head>
+<body>
+  <canvas id="fiberCanvas" width="600" height="600"></canvas>
+  <script>
+    const canvas = document.getElementById('fiberCanvas');
+    const ctx = canvas.getContext('2d');
+    const circleCenter = { x: 300, y: 300 };
+    const circleRadius = 200;
+    const refractiveIndexInside = 1.5;
+    const refractiveIndexOutside = 1.0;
+    const criticalAngle = Math.asin(refractiveIndexOutside / refractiveIndexInside);
+
+    let sourcePoint = { x: 300, y: 300 };
+
+    // Draw the fiber circle
+    function drawCircle() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.beginPath();
+      ctx.arc(circleCenter.x, circleCenter.y, circleRadius, 0, Math.PI * 2);
+      ctx.strokeStyle = 'black';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    // Draw a ray from sourcePoint
+    function drawRay(angle) {
+      const dx = Math.cos(angle);
+      const dy = Math.sin(angle);
+      let x = sourcePoint.x;
+      let y = sourcePoint.y;
+
+      let intersect = getCircleIntersection(x, y, dx, dy);
+
+      if (intersect) {
+        const { x: ix, y: iy, normalAngle } = intersect;
+        drawLine(sourcePoint.x, sourcePoint.y, ix, iy, 'blue');
+
+        // Calculate incidence angle as absolute difference between normal and incoming ray angle
+        const incidenceAngle = Math.abs(normalizeAngle(angle - normalAngle));
+
+        if (incidenceAngle >= criticalAngle) {
+          // Reflect the ray if the angle of incidence is greater than or equal to the critical angle
+          const reflectAngle = 2 * normalAngle - angle;
+          drawReflectedRay(ix, iy, reflectAngle);
+        } else {
+          // Refract the ray based on Snell's law if angle is less than critical angle
+          const refractAngle = normalAngle + Math.asin((refractiveIndexInside / refractiveIndexOutside) * Math.sin(incidenceAngle));
+          drawRefractedRay(ix, iy, refractAngle);
+        }
+      }
+    }
+
+    // Draw the reflected ray
+    function drawReflectedRay(x, y, angle) {
+      const endX = x - Math.cos(angle) * 300;
+      const endY = y - Math.sin(angle) * 300;
+      drawLine(x, y, endX, endY, 'red');
+    }
+
+    // Draw the refracted ray
+    function drawRefractedRay(x, y, angle) {
+      const endX = x + Math.cos(angle) * 300;
+      const endY = y + Math.sin(angle) * 300;
+      drawLine(x, y, endX, endY, 'green');
+    }
+
+    // Draw a line on canvas
+    function drawLine(x1, y1, x2, y2, color = 'black') {
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    // Calculate circle intersection
+    function getCircleIntersection(x, y, dx, dy) {
+      const a = dx * dx + dy * dy;
+      const b = 2 * (dx * (x - circleCenter.x) + dy * (y - circleCenter.y));
+      const c = (x - circleCenter.x) ** 2 + (y - circleCenter.y) ** 2 - circleRadius ** 2;
+      const discriminant = b * b - 4 * a * c;
+
+      if (discriminant >= 0) {
+        const t = (-b + Math.sqrt(discriminant)) / (2 * a);
+        const ix = x + dx * t;
+        const iy = y + dy * t;
+        const normalAngle = Math.atan2(iy - circleCenter.y, ix - circleCenter.x);
+        return { x: ix, y: iy, normalAngle };
+      }
+      return null;
+    }
+
+    // Normalize angle between 0 and 2*PI
+    function normalizeAngle(angle) {
+      return ((angle + Math.PI) % (2 * Math.PI)) - Math.PI;
+    }
+
+    // Update sourcePoint position and redraw on mouse move
+    canvas.addEventListener('mousemove', (event) => {
+      sourcePoint = { x: event.offsetX, y: event.offsetY };
+      draw();
+    });
+
+    // Draw circle and rays
+    function draw() {
+      drawCircle();
+      for (let i = 0; i < 360; i += 15) {
+        const angle = i * (Math.PI / 180);
+        drawRay(angle);
+      }
+    }
+
+    // Initial draw
+    draw();
+  </script>
+</body>
+</html>
