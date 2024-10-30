@@ -16,7 +16,7 @@
     const ctx = canvas.getContext('2d');
     const circleCenter = { x: 300, y: 300 };
     const circleRadius = 200;
-    const refractiveIndexInside = 1.6;
+    const refractiveIndexInside = 1.7;
     const refractiveIndexOutside = 1.0;
     const criticalAngle = Math.asin(refractiveIndexOutside / refractiveIndexInside);
 
@@ -59,16 +59,19 @@
           drawReflectedRay(ix, iy, reflectAngle);
         } else {
           // Refract the ray based on Snell's law if outside the circle or angle is below critical angle
-          const refractAngle = normalAngle + Math.asin((refractiveIndexInside / refractiveIndexOutside) * Math.sin(incidenceAngle));
-          drawRefractedRay(ix, iy, refractAngle);
+          const refractAngle = incidenceAngle + Math.asin((refractiveIndexInside / refractiveIndexOutside) * Math.sin(incidenceAngle));
+          // drawRefractedRay(ix, iy, refractAngle);
+          // print normalangle
+          // drawRefractedRay(ix, iy, incidenceAngle);
+
         }}
       }
     }
 
     // Draw the reflected ray
     function drawReflectedRay(x, y, angle) {
-      const endX = x - Math.cos(angle) * 300;
-      const endY = y - Math.sin(angle) * 300;
+      const endX = x - Math.cos(angle) * 150;
+      const endY = y - Math.sin(angle) * 150;
       drawLine(x, y, endX, endY, 'red');
     }
 
